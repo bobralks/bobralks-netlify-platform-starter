@@ -1,0 +1,1128 @@
+local_backend: true # Allow to edit files locally
+media_folder: src/assets/images
+public_folder: "@assets/images"
+logo_url: /astro-icon-dark.svg
+
+backend:
+    name: github
+    repo: bobralks/bobralks-alpinejs
+    branch: main
+    site_domain: bobralks-alpinejs.netlify.app
+    base_url: https://bobralks-alpinejs.netlify.app
+    # auth_endpoint: oauth
+    # auth_endpoint: auth
+    automatic_deployments: false
+
+collections:
+
+- label: Settings
+  name: settings
+  icon: settings
+  files:
+  - label: 'Home Page'
+    name: home
+    file: 'src/content/settings/home.md'
+    description: 'General Site Settings'
+    fields:
+    - label: Banner
+      name: banner
+      widget: object
+      fields:
+      - { label: Title, name: title, widget: string }
+      - { label: Content, name: content, widget: text }
+      - { label: Image, name: image, widget: image }
+      - label: Button
+        name: button
+        widget: object
+        fields:
+        - { label: Label, name: label, widget: string }
+        - { label: Link, name: link, widget: string }
+        - { label: Enable, name: enable, widget: boolean }
+    - label: Key Features
+      name: key_features
+      widget: object
+      fields:
+      - { label: Title, name: title, widget: string }
+      - { label: Description, name: description, widget: text, required: false }
+      - label: Feature List
+        name: feature_list
+        widget: list
+        fields:
+        - { label: Title, name: title, widget: string }
+        - { label: Icon, name: icon, widget: string }
+        - { label: Content, name: content, widget: text }
+    - label: Service
+      name: service
+      widget: object
+      fields:
+      - { label: Title, name: title, widget: string }
+      - { label: Description, name: description, widget: text }
+      - label: Feature List
+        name: feature_list
+        widget: list
+        fields:
+        - { label: Title, name: title, widget: string }
+        - { label: Icon, name: icon, widget: string }
+        - { label: Content, name: content, widget: text }
+    - label: Our Service
+      name: our_service
+      widget: object
+      fields:
+      - { label: Title, name: title, widget: string }
+      - { label: Description, name: description, widget: text }
+      - label: Feature List
+        name: feature_list
+        widget: list
+        fields:
+        - { label: Title, name: title, widget: string }
+        - { label: Icon, name: icon, widget: string }
+        - { label: Content, name: content, widget: text }
+    - label: Testimonial
+      name: testimonial
+      widget: object
+      fields:
+      - { label: Title, name: title, widget: string }
+      - { label: Description, name: description, widget: text }
+      - label: Feature List
+        name: feature_list
+        widget: list
+        fields:
+        - { label: Title, name: title, widget: string }
+        - { label: Icon, name: icon, widget: string }
+        - { label: Content, name: content, widget: text }
+
+- label: Listings
+  name: listings
+  icon: hotel
+  create: true
+  folder: src/content/listings
+  media_folder: /src/assets/images/listings # Specific media folder for the collection
+  public_folder: "@assets/images/listings" # Specific public assets folder for the collection
+#   - file: src/content/listings/listings.json
+  fields: # The fields for each document, usually in front matter
+    - { label: "Title", name: "title", widget: "string" }
+    - { label: "Description", name: "description", widget: "string" }
+    - { label: "Image", name: "image", widget: "image" }
+    - { label: "Host", name: "host", widget: "string" }
+    - { label: "Body Text", name: "body", widget: "markdown", required: false }
+
+- label: Bookings
+  name: bookings
+  icon: check_circle
+  create: true
+  folder: "src/content/bookings"
+  # format: json
+  media_folder: "/src/assets/images/bookings" # Specific media folder for the collection
+  public_folder: "@assets/images/bookings" # Specific public assets folder for the collection
+#   - file: src/content/listings/listings.json
+  identifier_field: name # Filename template, e.g., YYYY-MM-DD-title.md
+  slug: "{{name}}"
+  editor:
+    preview: false
+  fields: # The fields for each document, usually in front matter
+  # - label: Listing
+  #   name: listing
+  #   widget: relation
+  #   collection: listings
+    # search_fields: [title]
+    # display_fields: [title]
+  - { label: "Title", name: "title", widget: "string", default: "{{name}} ({{listing}} - {{mm/yy}} - {{mm/dd}})" }
+  - { label: "Name", name: "name", widget: "string" }
+  - { label: "Listing", name: "listing", widget: "string", default: "the-cozy-studio" }
+  # - { label: "Listing", name: "listing",  widget: relation, collection: listings }
+  # , search_fields: [name], display_fields: [name]
+  #  }
+  - { label: "Start Date", name: "start", widget: "datetime", required: false }
+  - { label: "End Date", name: "end", widget: "datetime", required: false }
+  - { label: "Reference", name: "reference", widget: "string", default: "{{L}}{{yymmdd}}{{mmddyy}}" }
+  - { label: "Status", name: "status", widget: "string", default: "Confirmed" }
+  - { label: "Checked In", name: "checkedIn", widget: "boolean", default: false }
+  - { label: "Checked Out", name: "checkedOut", widget: "boolean", default: false }
+  - { label: "Notes", name: "description", widget: "markdown", required: false }
+  - { label: "Description", name: "body", widget: "markdown", required: false }
+  - { label: "Image", name: "image", widget: "image", required: false, default: "@assets/images/bookings/anonymous.png" }
+
+- label: Places
+  name: places
+  icon: map
+  create: true
+  folder: src/content/places
+  media_folder: /src/assets/images/places # Specific media folder for the collection
+  public_folder: "@assets/images/places" # Specific public assets folder for the collection
+#   - file: src/content/listings/listings.json
+  fields: # The fields for each document, usually in front matter
+    - { label: "Title", name: "title", widget: "string" }
+    - { label: "Description", name: "description", widget: "string" }
+    - { label: "Location", name: "location", widget: "string", default: "13.068849649266687, -59.55272504023463" }
+    - { label: "Image", name: "image", widget: "image", required: false }
+    - { label: "PubDate", name: "pubDate", widget: "datetime" }
+    - { label: "Body Text", name: "body", widget: "markdown", required: false }
+
+# - label: Projects
+#   name: projects
+#   icon: bookmark_added
+#   create: true
+#   folder: "src/content/projects"
+#   # format: json
+#   media_folder: "/src/assets/images/projects" # Specific media folder for the collection
+#   public_folder: "@assets/images/projects" # Specific public assets folder for the collection
+# #   - file: src/content/listings/listings.json
+#   fields: # The fields for each document, usually in front matter
+#   # - label: Listing
+#   #   name: listing
+#   #   widget: relation
+#   #   collection: listings
+#     # search_fields: [title]
+#     # display_fields: [title]
+#   - { label: "Title", name: "title", widget: "string", default: "{{year}}-{{month}}" }
+#   - { label: "Description", name: "description", widget: "markdown", required: false }
+#   - { label: "Image", name: "image", widget: "image", required: false, default: "@assets/images/projects/default.png" }
+#   - { label: "Start Date", name: "start", widget: "datetime", required: false }
+#   - { label: "End Date", name: "end", widget: "datetime", required: false }
+#   - { label: "Body Text", name: "body", widget: "markdown", required: false }
+
+# - label: Work
+#   name: work
+#   icon: bookmark_added
+#   create: true
+#   folder: "src/content/projects"
+#   # format: json
+#   media_folder: "/src/assets/images/projects" # Specific media folder for the collection
+#   public_folder: "@assets/images/projects" # Specific public assets folder for the collection
+# #   - file: src/content/listings/listings.json
+#   fields: # The fields for each document, usually in front matter
+#   # - label: Listing
+#   #   name: listing
+#   #   widget: relation
+#   #   collection: listings
+#     # search_fields: [title]
+#     # display_fields: [title]
+#   - { label: "Title", name: "title", widget: "string", default: "{{year}}-{{month}}" }
+#   - { label: "Description", name: "description", widget: "markdown", required: false }
+#   - { label: "Image", name: "image", widget: "image", required: false, default: "@assets/images/projects/default.png" }
+#   - { label: "Start Date", name: "start", widget: "datetime", required: false }
+#   - { label: "End Date", name: "end", widget: "datetime", required: false }
+#   - { label: "Body Text", name: "body", widget: "markdown", required: false }
+  
+- label: Blog
+  name: blog
+  icon: rss_feed
+  create: true
+  folder: src/content/blog
+  # media_folder: /src/assets/images/blog # Specific media folder for the collection
+  # public_folder: "@assets/images/blog" # Specific public assets folder for the collection
+  media_folder: /src/assets/images/blog # Specific media folder for the collection
+  public_folder: "@assets/images/blog" # Specific public assets folder for the collection
+#   - file: src/content/listings/listings.json
+  slug: "{{slug}}" # Filename template, e.g., YYYY-MM-DD-title.md
+  fields: # The fields for each document, usually in front matter
+    - { label: "Title", name: "title", widget: "string" }
+    - { label: "Description", name: "description", widget: "string" }
+    - { label: "Author", name: "author", widget: "string", default: "Laura Lin" }
+    - { label: "Date", name: "pubDate", widget: "datetime", default: "{{year}}-{{month}}-{{day}}" }
+    - { label: "Image", name: "heroImage", widget: "image", default: "@assets/images/blog/default.png" }
+    - { label: "Tags", name: "tags", widget: "list" }
+
+- label: Resumes
+  name: resumes
+  create: true
+  format: json
+  folder: src/content/resumes
+  identifier_field: basics.name
+  media_folder: /src/assets/images/resumes # Specific media folder for the collection
+  public_folder: "@assets/images/resumes" # Specific public assets folder for the collection
+  fields: # The fields for each document, usually in front matter
+  - name: basics
+    label: Basics
+    widget: object
+    fields:
+    - { name: name, label: Name, widget: string }
+    - { name: label, label: Label, widget: string }
+    - { name: image, label: Image, widget: image }
+    - { name: email, label: Email, widget: string }
+    - { name: phone, label: Phone, widget: string }
+    - { name: url, label: URL, widget: string }
+    - { name: summary, label: Summary, widget: string }
+    - name: location
+      label: Location
+      required: false
+      widget: object
+      fields:
+      - { name: address, label: Address, widget: string, required: false }
+      - { name: postalCode, label: Postal Code, widget: string }
+      - { name: city, label: City, widget: string }
+      - { name: countryCode, label: Code, widget: string }
+      - { name: region, label: Region, widget: string }
+    - name: profiles
+      label: Profiles
+      widget: list 
+      fields:
+      - { name: network, label: Network, widget: string }
+      - { name: username, label: Username, widget: string }
+      - { name: url, label: URL, widget: string }  
+  - name: work
+    label: Work
+    widget: list
+    fields:
+    - { name: name, label: Name, widget: string }
+    - { name: position, label: Position, widget: string }
+    - { name: url, label: URL, widget: string, required: false }
+    - { name: startDate, label: Start Date, widget: datetime }
+    - { name: endDate, label: End Date, widget: datetime, required: false }
+    - { name: summary, label: Summary, widget: string }
+    - { name: highlights, label: Highlights, widget: list }
+  - name: volunteer
+    label: Volunteer
+    widget: list
+    fields:
+    - { name: organization, label: Organization, widget: string }
+    - { name: position, label: Position, widget: string }
+    - { name: url, label: URL, widget: string, required: false }
+    - { name: startDate, label: Start Date, widget: datetime }
+    - { name: endDate, label: End Date, widget: datetime }
+    - { name: summary, label: Summary, widget: string }
+    - { name: highlights, label: Highlights, widget: list }
+  - name: education
+    label: Education
+    widget: list
+    fields:
+    - { name: institution, label: Institution, widget: string }
+    - { name: url, label: URL, widget: string, required: false }
+    - { name: area, label: Area, widget: string }
+    - { name: studyType, label: Study Type, widget: string }
+    - { name: startDate, label: Start Date, widget: datetime }
+    - { name: endDate, label: End Date, widget: datetime, required: false }
+    - { name: score, label: Score, widget: string }
+    - { name: courses, label: Courses, widget: list }
+  - name: awards
+    label: Awards
+    widget: list
+    fields:
+    - { name: title, label: Title, widget: string }
+    - { name: date, label: Date, widget: datetime }
+    - { name: awarder, label: Awarder, widget: string }
+    - { name: summary, label: Summary, widget: string }
+  - name: certificates
+    label: Certificates
+    widget: list
+    fields:
+    - { name: name, label: Name, widget: string }
+    - { name: date, label: Date, widget: datetime }
+    - { name: issuer, label: Issuer, widget: string }
+    - { name: url, label: URL, widget: string, required: false }
+  - name: certificates
+    label: Certificates
+    widget: list
+    fields:
+    - { name: name, label: Name, widget: string }
+  - name: publications
+    label: Publications
+    widget: list
+    fields:
+    - { name: name, label: Name, widget: string }
+    - { name: publisher, label: Publisher, widget: string }
+    - { name: releaseDate, label: Release Date, widget: datetime }
+    - { name: url, label: URL, widget: string, required: false }
+    - { name: summary, label: Summary, widget: string }
+  - name: languages
+    label: Languages
+    widget: list
+    fields:
+    - { name: language, label: Language, widget: string }
+    - { name: fluency, label: Fluency, widget: string }
+  - name: projects
+    label: Projects
+    widget: list
+    fields:
+    - { name: name, label: Name, widget: string }
+    - { name: isActive, label: Active, widget: boolean }
+    - { name: description, label: Description, widget: string, required: false }
+    - { name: keywords, label: Keywords, widget: list, required: false }
+    - { name: highlights, label: Highlights, widget: list }
+    - { name: url, label: URL, widget: string, required: false }
+    - { name: github, label: GitHub, widget: string, required: false }
+  - name: interests
+    label: Interests
+    widget: list
+    fields:
+    - { name: name, label: Name, widget: string }
+    - { name: keywords, label: Keywords, widget: list }
+  - name: references
+    label: References
+    widget: list
+    fields:
+    - { name: name, label: Name, widget: string }
+    - { name: reference, label: Reference, widget: string }
+
+
+
+    # - { label: "Title", name: "title", widget: "string" }
+    # - { label: "Description", name: "description", widget: "string" }
+    # - { label: "Image", name: "image", widget: "image" }
+    # - { label: "Host", name: "host", widget: "string" }
+    # - { label: "Body Text", name: "body", widget: "markdown", required: false }
+
+    # - label: Pinwheel Pages
+    #   name: pinwheel_pages
+    #   files:
+    #   - label: 'Home Page'
+    #     name: home
+    #     file: 'src/content/homepage/index.md'
+    #     description: 'General Site Settings'
+    #     fields:
+    #     - label: Banner
+    #       name: banner
+    #       widget: object
+    #       fields:
+    #       - { label: Title, name: title, widget: string }
+    #       - { label: Content, name: content, widget: text }
+    #       - { label: Image, name: image, widget: image }
+    #       - label: Button
+    #         name: button
+    #         widget: object
+    #         fields:
+    #         - { label: Label, name: label, widget: string }
+    #         - { label: Link, name: link, widget: string }
+    #         - { label: Enable, name: enable, widget: boolean }
+    #     - label: Key Features
+    #       name: key_features
+    #       widget: object
+    #       fields:
+    #       - { label: Title, name: title, widget: string }
+    #       - { label: Description, name: description, widget: text, required: false }
+    #       - label: Feature List
+    #         name: feature_list
+    #         widget: list
+    #         fields:
+    #         - { label: Title, name: title, widget: string }
+    #         - { label: Icon, name: icon, widget: string }
+    #         - { label: Content, name: content, widget: text }
+    #     - label: Service
+    #       name: service
+    #       widget: object
+    #       fields:
+    #       - { label: Title, name: title, widget: string }
+    #       - { label: Description, name: description, widget: text }
+    #       - label: Feature List
+    #         name: feature_list
+    #         widget: list
+    #         fields:
+    #         - { label: Title, name: title, widget: string }
+    #         - { label: Icon, name: icon, widget: string }
+    #         - { label: Content, name: content, widget: text }
+    #     - label: Our Service
+    #       name: our_service
+    #       widget: object
+    #       fields:
+    #       - { label: Title, name: title, widget: string }
+    #       - { label: Description, name: description, widget: text }
+    #       - label: Feature List
+    #         name: feature_list
+    #         widget: list
+    #         fields:
+    #         - { label: Title, name: title, widget: string }
+    #         - { label: Icon, name: icon, widget: string }
+    #         - { label: Content, name: content, widget: text }
+    #     - label: Testimonial
+    #       name: testimonial
+    #       widget: object
+    #       fields:
+    #       - { label: Title, name: title, widget: string }
+    #       - { label: Description, name: description, widget: text }
+    #       - label: Feature List
+    #         name: feature_list
+    #         widget: list
+    #         fields:
+    #         - { label: Title, name: title, widget: string }
+    #         - { label: Icon, name: icon, widget: string }
+    #         - { label: Content, name: content, widget: text }
+    #       # - { label: Image, name: image, widget: image }
+    #       # - label: Button
+    #       #   name: button
+    #       #   widget: object
+    #       #   fields:
+    #       #   - { label: Label, name: label, widget: string }
+    #       #   - { label: Link, name: link, widget: string }
+    #       #   - { label: Enable, name: enable, widget: boolean }
+
+    #       # - { label: Title, name: title, widget: string }
+    #       # - { label: Content, name: content, widget: text }
+    #       # - { label: Image, name: image, widget: image }
+    #       # - { label: 'Markdown', name: 'markdown', widget: 'markdown' }
+    #       # - { label: 'String', name: 'string', widget: 'string' }
+    #       # - { label: 'Boolean', name: 'boolean', widget: 'boolean' }
+    #       # - { label: 'Text', name: 'text', widget: 'text' }
+    #       # - { label: 'Number', name: 'number', widget: 'number' }
+    #       # - { label: 'Markdown', name: 'markdown', widget: 'markdown' }
+    #       # - { label: 'Datetime', name: 'datetime', widget: 'datetime' }
+    #       # # - { label: 'Image', name: 'image', widget: 'image' }
+    #       # - { label: 'File', name: 'file', widget: 'file' }
+    #       # - {
+    #       #     label: 'Select',
+    #       #     name: 'select',
+    #       #     widget: 'select',
+    #       #     options: ['a', 'b', 'c'],
+    #       #   }
+
+    #   - label: About
+    #     name: about
+    #     file: 'src/content/about/index.md'
+    #     description: 'General Site Settings'
+    #     fields:
+    #     - { label: Title, name: title, widget: string }
+    #     - { label: Page Title, name: page_title, widget: string }
+    #   - label: Blog
+    #     name: blog
+    #     file: 'src/content/blog/-index.md'
+    #     description: 'General Site Settings'
+    #     fields:
+    #     - { label: Title, name: title, widget: string }
+    #     - { label: Page Title, name: page_title, widget: string }
+    #   - label: Careers
+    #     name: careers
+    #     file: 'src/content/careers/-index.md'
+    #     description: 'General Site Settings'
+    #     fields:
+    #     - { label: Title, name: title, widget: string }
+    #     - { label: Page Title, name: page_title, widget: string }
+    #   - label: Contact
+    #     name: contact
+    #     file: 'src/content/contact/index.md'
+    #     description: 'General Site Settings'
+    #     fields:
+    #     - { label: Title, name: title, widget: string }
+    #     - { label: Page Title, name: page_title, widget: string }
+    #   - label: Features
+    #     name: features
+    #     file: 'src/content/features/index.md'
+    #     description: 'General Site Settings'
+    #     fields:
+    #     - { label: Title, name: title, widget: string }
+    #     - { label: Page Title, name: page_title, widget: string, required: false }
+    #   - label: How It Works
+    #     name: how-it-works
+    #     file: 'src/content/how-it-works/index.md'
+    #     description: 'General Site Settings'
+    #     fields:
+    #     - { label: Title, name: title, widget: string }
+    #     - { label: Page Title, name: page_title, widget: string }
+    #   - label: Integrations
+    #     name: integrations
+    #     file: 'src/content/integrations/-index.md'
+    #     description: 'General Site Settings'
+    #     fields:
+    #     - { label: Title, name: title, widget: string }
+    #     - { label: Page Title, name: page_title, widget: string }
+    #   - label: Pricing
+    #     name: pricing
+    #     file: 'src/content/pricing/index.md'
+    #     description: 'General Site Settings'
+    #     fields:
+    #     - { label: Title, name: title, widget: string }
+    #     - { label: Page Title, name: page_title, widget: string }
+    #       # - { label: Title, name: title, widget: string }
+    #       # - { label: Content, name: content, widget: text }
+    #       # - { label: Image, name: image, widget: image }
+    #       # - { label: 'Markdown', name: 'markdown', widget: 'markdown' }
+    #       # - { label: 'String', name: 'string', widget: 'string' }
+    #       # - { label: 'Boolean', name: 'boolean', widget: 'boolean' }
+    #       # - { label: 'Text', name: 'text', widget: 'text' }
+    #       # - { label: 'Number', name: 'number', widget: 'number' }
+    #       # - { label: 'Markdown', name: 'markdown', widget: 'markdown' }
+    #       # - { label: 'Datetime', name: 'datetime', widget: 'datetime' }
+    #       # # - { label: 'Image', name: 'image', widget: 'image' }
+    #       # - { label: 'File', name: 'file', widget: 'file' }
+    #       # - {
+    #       #     label: 'Select',
+    #       #     name: 'select',
+    #       #     widget: 'select',
+    #       #     options: ['a', 'b', 'c'],
+    #       #   }
+
+    # - label: Settings
+    #   name: settings
+    #   icon: settings
+    #   media_folder: /src/assets/images/site # Specific media folder for the collection
+    #   public_folder: "@assets/images/site" # Specific public assets folder for the collection
+    #   create: true
+    #   delete: false # Prevent users from deleting documents in this collection
+    #   editor:
+    #     preview: false
+    #   files:
+    #   - name: 'general'
+    #     label: 'Site Settings'
+    #     file: '_data/settings.json'
+    #     description: 'General Site Settings'
+    #     fields:
+    #       - { label: 'Image', name: 'image', widget: 'image', required: false }
+    #       - { label: 'Global title', name: 'site_title', widget: 'string' }
+    #       - label: 'Post Settings'
+    #         name: posts
+    #         widget: 'object'
+    #         fields:
+    #           - {
+    #               label: 'Number of posts on frontpage',
+    #               name: front_limit,
+    #               widget: number,
+    #               min: 1,
+    #               max: 10,
+    #             }
+    #           - { label: 'Default Author', name: author, widget: string }
+    #           - {
+    #               label: 'Default Thumbnail',
+    #               name: thumb,
+    #               widget: image,
+    #               class: 'thumb',
+    #               required: false,
+    #             }
+
+- name: "users" # Used in routes, e.g., /admin/collections/blog
+  label: "Users" # Used in the UI
+  icon: person
+  folder: "src/content/users" # The path to the folder where the documents are stored
+  create: true # Allow users to create new documents in this collection
+  media_folder: /src/assets/images/users # Specific media folder for the collection
+  public_folder: "@assets/images/users" # Specific public assets folder for the collection
+  preview_path_date_field: "date"
+  identifier_field: name
+  slug: "{{slug}}" # Filename template, e.g., YYYY-MM-DD-title.md
+  fields: # The fields for each document, usually in front matter
+      - { label: "Name", name: "name", widget: "string" }
+      - { label: "Publish Date", name: "date", widget: "datetime" }
+      - { label: "Photo", name: "img", widget: "image" }
+      - { label: "Description", name: "body", widget: "markdown", required: false }
+
+- name: "pets" # Used in routes, e.g., /admin/collections/blog
+  label: "Pets" # Used in the UI
+  icon: person
+  folder: "src/content/pets" # The path to the folder where the documents are stored
+  create: true # Allow users to create new documents in this collection
+  media_folder: /src/assets/images/pets # Specific media folder for the collection
+  public_folder: "@assets/images/pets" # Specific public assets folder for the collection
+  preview_path_date_field: "date"
+  identifier_field: name
+  slug: "{{slug}}" # Filename template, e.g., YYYY-MM-DD-title.md
+  fields: # The fields for each document, usually in front matter
+      - { label: "Name", name: "name", widget: "string" }
+      # - { label: "Publish Date", name: "date", widget: "datetime" }
+      - { label: "Image", name: "image", widget: "image" }
+      # - { label: "Description", name: "body", widget: "markdown", required: false }
+
+- name: "animals" # Used in routes, e.g., /admin/collections/blog
+  label: "Animals" # Used in the UI
+  icon: person
+  folder: "src/content/animals" # The path to the folder where the documents are stored
+  create: true # Allow users to create new documents in this collection
+  media_folder: /src/assets/images/animals # Specific media folder for the collection
+  public_folder: "@assets/images/animals" # Specific public assets folder for the collection
+  preview_path_date_field: "date"
+  identifier_field: name
+  slug: "{{slug}}" # Filename template, e.g., YYYY-MM-DD-title.md
+  fields: # The fields for each document, usually in front matter
+      - { label: "Name", name: "name", widget: "string" }
+      # - { label: "Publish Date", name: "date", widget: "datetime" }
+      - { label: "Image", name: "image", widget: "image" }
+      # - { label: "Description", name: "body", widget: "markdown", required: false }
+
+    # - name: "authors" # Used in routes, e.g., /admin/collections/blog
+    #   label: "Authors" # Used in the UI
+    #   icon: person
+    #   folder: "src/content/authors" # The path to the folder where the documents are stored
+    #   create: true # Allow users to create new documents in this collection
+    #   media_folder: /src/assets/images/authors # Specific media folder for the collection
+    #   public_folder: "@assets/images/authors" # Specific public assets folder for the collection
+    #   preview_path_date_field: "date"
+    #   slug: "{{slug}}" # Filename template, e.g., YYYY-MM-DD-title.md
+    #   identifier_field: name
+    #   fields: # The fields for each document, usually in front matter
+    #       - { label: "Name", name: "name", widget: "string" }
+    #       - { label: "Publish Date", name: "date", widget: "datetime" }
+    #       - { label: "Photo", name: "img", widget: "image" }
+    #       - { label: "Description", name: "body", widget: "markdown", required: false }
+
+    # - name: "team" # Used in routes, e.g., /admin/collections/blog
+    #   label: "Team" # Used in the UI
+    #   icon: person
+    #   folder: "src/content/team" # The path to the folder where the documents are stored
+    #   create: true # Allow users to create new documents in this collection
+    #   media_folder: /src/assets/images/team # Specific media folder for the collection
+    #   public_folder: "@assets/images/team" # Specific public assets folder for the collection
+    #   preview_path_date_field: "date"
+    #   slug: "{{slug}}" # Filename template, e.g., YYYY-MM-DD-title.md
+    #   identifier_field: name
+    #   fields: # The fields for each document, usually in front matter
+    #       - { label: "Name", name: "title", widget: "string" }
+    #       - { label: "Description", name: "description", widget: "string", required: false }
+    #       - { label: "Publish Date", name: "publishDate", widget: "datetime" }
+    #       - { label: "Image", name: "image", widget: "image", default: "@assets/images/team/default.png" }
+    #       - { label: "Avatar", name: "avatar", widget: "objeect", required: false }
+    #       - { label: "Body Text", name: "body", widget: "markdown", required: false }
+
+    # - label: Hosts
+    #   name: hosts
+    #   icon: person
+    #   create: true
+    #   folder: src/content/hosts
+    #   media_folder: /src/assets/images/hosts # Specific media folder for the collection
+    #   public_folder: "@assets/images/hosts" # Specific public assets folder for the collection
+    # #   - file: src/content/listings/listings.json
+    #   fields: # The fields for each document, usually in front matter
+    #     - { label: "Name", name: "title", widget: "string" }
+    #     - { label: "Title", name: "description", widget: "string" }
+    #     - { label: "Blurb", name: "blurb", widget: "markdown", required: false, default: "A short description of the host" }
+    #     - { label: "Image", name: "image", widget: "image" }
+    #     - { label: "Body Text", name: "body", widget: "markdown", required: false }
+
+    # - label: Listings
+    #   name: listings
+    #   icon: hotel
+    #   create: true
+    #   folder: src/content/listings
+    #   media_folder: /src/assets/images/listings # Specific media folder for the collection
+    #   public_folder: "@assets/images/listings" # Specific public assets folder for the collection
+    # #   - file: src/content/listings/listings.json
+    #   fields: # The fields for each document, usually in front matter
+    #     - { label: "Title", name: "title", widget: "string" }
+    #     - { label: "Description", name: "description", widget: "string" }
+    #     - { label: "Image", name: "image", widget: "image" }
+    #     - { label: "Host", name: "host", widget: "string" }
+    #     - { label: "Body Text", name: "body", widget: "markdown", required: false }
+
+    # # draft: z.boolean(),
+    # # name: z.string(),
+    # # title: z.string(),
+    # # image: image().optional(),
+    # # avatar: z.object({
+    # #   src: z.string(),
+    # #   alt: z.string(),
+    # # }).optional(),
+    # # publishDate: z.string().transform(str => new Date(str)),
+
+
+
+    # - label: Bookings
+    #   name: bookings
+    #   icon: bookmark_added
+    #   create: true
+    #   folder: "src/content/bookings"
+    #   # format: json
+    #   media_folder: "/src/assets/images/bookings" # Specific media folder for the collection
+    #   public_folder: "@assets/images/bookings" # Specific public assets folder for the collection
+    # #   - file: src/content/listings/listings.json
+    #   identifier_field: name # Filename template, e.g., YYYY-MM-DD-title.md
+    #   slug: "{{name}}"
+    #   editor:
+    #     preview: false
+    #   fields: # The fields for each document, usually in front matter
+    #   # - label: Listing
+    #   #   name: listing
+    #   #   widget: relation
+    #   #   collection: listings
+    #     # search_fields: [title]
+    #     # display_fields: [title]
+    #   - { label: "Title", name: "title", widget: "string", default: "{{name}} ({{listing}} - {{mm/yy}} - {{mm/dd}})" }
+    #   - { label: "Name", name: "name", widget: "string" }
+    #   - { label: "Listing", name: "listing", widget: "string", default: "the-cozy-studio" }
+    #   # - { label: "Listing", name: "listing",  widget: relation, collection: listings }
+    #   # , search_fields: [name], display_fields: [name]
+    #   #  }
+    #   - { label: "Start Date", name: "start", widget: "datetime", required: false }
+    #   - { label: "End Date", name: "end", widget: "datetime", required: false }
+    #   - { label: "Reference", name: "reference", widget: "string", default: "{{L}}{{yymmdd}}{{mmddyy}}" }
+    #   - { label: "Notes", name: "description", widget: "markdown", required: false }
+    #   - { label: "Description", name: "body", widget: "markdown", required: false }
+    #   - { label: "Image", name: "image", widget: "image", required: false, default: "@assets/images/bookings/default.png" }
+
+    # - label: Reviews
+    #   name: reviews
+    #   create: true
+    #   folder: src/content/reviews
+    #   media_folder: /src/assets/images/reviews # Specific media folder for the collection
+    #   public_folder: "@assets/images/reviews" # Specific public assets folder for the collection
+    #   format: json
+    # #   - file: src/content/listings/listings.json
+    #   identifier_field: reviewer
+    #   slug: '{{reviewer}}-{{year}}-{{month}}-{{day}}'
+    #   fields: # The fields for each document, usually in front matter
+    #     - { label: "Name", name: "reviewer", widget: "string" }
+    #     - { label: "Image", name: "image", widget: "image", default: "@assets/images/reviews/default.png" }
+    #     - { label: "Avatar", name: "reviewer_avatar", widget: "image" }
+    #     - { label: "Rating", name: "rating", widget: "number" }
+    #     - { label: "Comment", name: "text", widget: "markdown", required: false }
+
+    # - label: Projects
+    #   name: projects
+    #   icon: bookmark_added
+    #   create: true
+    #   folder: "src/content/projects"
+    #   # format: json
+    #   media_folder: "/src/assets/images/projects" # Specific media folder for the collection
+    #   public_folder: "@assets/images/projects" # Specific public assets folder for the collection
+    # #   - file: src/content/listings/listings.json
+    #   fields: # The fields for each document, usually in front matter
+    #   # - label: Listing
+    #   #   name: listing
+    #   #   widget: relation
+    #   #   collection: listings
+    #     # search_fields: [title]
+    #     # display_fields: [title]
+    #   - { label: "Title", name: "title", widget: "string", default: "{{year}}-{{month}}" }
+    #   - { label: "Description", name: "description", widget: "markdown", required: false }
+    #   - { label: "Image", name: "image", widget: "image", required: false, default: "@assets/images/projects/default.png" }
+    #   - { label: "Start Date", name: "start", widget: "datetime", required: false }
+    #   - { label: "End Date", name: "end", widget: "datetime", required: false }
+    #   - { label: "Body Text", name: "body", widget: "markdown", required: false }
+
+    # - label: "Posts" # Used in the UI
+    #   name: "posts" # Used in routes, e.g., /admin/collections/blog
+    #   folder: "src/content/posts" # The path to the folder where the documents are stored
+    #   create: true # Allow users to create new documents in this collection
+    #   media_folder: /src/assets/images/posts # Specific media folder for the collection
+    #   public_folder: "@assets/images/posts" # Specific public assets folder for the collection
+    #   preview_path_date_field: "date"
+    #   slug: "{{slug}}" # Filename template, e.g., YYYY-MM-DD-title.md
+    #   fields: # The fields for each document, usually in front matter
+    #       - { label: "Title", name: "title", widget: "string" }
+    #       # - { label: "Author", name: "author",  widget: relation, collection: authors, search_fields: [name], display_fields: [name] }
+    #       - { label: "Publish Date", name: "date", widget: "datetime" }
+    #       - { label: "Featured Image", name: "img", widget: "image" }
+    #       - { label: "Body", name: "body", widget: "markdown" }
+
+    # - label: Blog
+    #   name: blog
+    #   create: true
+    #   folder: src/content/blog
+    #   media_folder: /src/assets/images/blog # Specific media folder for the collection
+    #   public_folder: "@assets/images/blog" # Specific public assets folder for the collection
+    # #   - file: src/content/listings/listings.json
+    #   slug: "{{slug}}" # Filename template, e.g., YYYY-MM-DD-title.md
+    #   fields: # The fields for each document, usually in front matter
+    #     - { label: "Title", name: "title", widget: "string" }
+    #     - { label: "Description", name: "description", widget: "string" }
+    #     - { label: "Author", name: "author", widget: "string" }
+    #     - { label: "PubDate", name: "pubDate", widget: "datetime" }
+    #     - { label: "Image", name: "heroImage", widget: "image" }
+
+    # - name: "partners" # Used in routes, e.g., /admin/collections/blog
+    #   label: "Partners" # Used in the UI
+    #   icon: store
+    #   folder: "src/content/partners" # The path to the folder where the documents are stored
+    #   create: true # Allow users to create new documents in this collection
+    #   media_folder: /src/assets/images/partners # Specific media folder for the collection
+    #   public_folder: "@assets/images/partners" # Specific public assets folder for the collection
+    #   preview_path_date_field: "date"
+    #   slug: "{{slug}}" # Filename template, e.g., YYYY-MM-DD-title.md
+    #   fields: # The fields for each document, usually in front matter
+    #       - { label: "Name", name: "title", widget: "string" }
+    #       - { label: "Description", name: "description", widget: "string", required: false }
+    #       - { label: "Icon", name: "string", widget: "string", required: false }
+    #       - { label: "Image", name: "image", widget: "image", required: false }
+    #       - { label: "Body Text", name: "body", widget: "markdown", required: false }
+
+    # - label: Features
+    #   name: features
+    #   icon: hotel_class
+    #   create: true
+    #   folder: src/content/features
+    #   media_folder: /src/assets/images/features # Specific media folder for the collection
+    #   public_folder: "@assets/images/features" # Specific public assets folder for the collection
+
+    # #   - file: src/content/listings/listings.json
+    #   fields: # The fields for each document, usually in front matter
+    #     - { label: "Title", name: "title", widget: "string" }
+    #     - { label: "Icon", name: "icon", widget: "string" }
+    #     - { label: "Image", name: "image", widget: "image", required: false, default: "@assets/images/features/star.png" }
+    #     - { label: "Description", name: "description", widget: "markdown" }
+
+    # - label: Places
+    #   name: places
+    # #   icon: question_mark
+    #   create: true
+    #   folder: src/content/places
+    #   media_folder: /src/assets/images/places # Specific media folder for the collection
+    #   public_folder: "@assets/images/places" # Specific public assets folder for the collection
+    # #   - file: src/content/listings/listings.json
+    #   fields: # The fields for each document, usually in front matter
+    #     - { label: "Title", name: "title", widget: "string" }
+    #     - { label: "Description", name: "description", widget: "string" }
+    #     - { label: "Location", name: "location", widget: "string", default: "13.068849649266687, -59.55272504023463" }
+    #     - { label: "Image", name: "image", widget: "image", required: false }
+    #     - { label: "PubDate", name: "pubDate", widget: "datetime" }
+    #     - { label: "Body Text", name: "body", widget: "markdown", required: false }
+
+    # - name: 'restaurants' # Used in routes, ie.: /admin/collections/:slug/edit
+    #   label: 'Restaurants' # Used in the UI
+    #   label_singular: 'Restaurant' # Used in the UI, ie: "New Post"
+    #   icon: fastfood
+    #   media_folder: /src/assets/images/restaurants # Specific media folder for the collection
+    #   public_folder: "@assets/images/restaurants" # Specific public assets folder for the collection
+    #   description: >
+    #     Restaurants is an entry type used for testing galleries, relations and other widgets.
+    #     The tests must be written in such way that adding new fields does not affect previous flows.
+    #   folder: '_restaurants'
+    #   slug: '{{year}}'
+    #   summary: '{{title}} -- {{year}}/{{month}}/{{day}}'
+    #   create: true # Allow users to create new documents in this collection
+    #   fields: # The fields each document in this collection have
+    #   - { label: 'Title', name: 'title', widget: 'string', tagname: 'h1' }
+    #   - { label: 'Description', name: 'description', widget: 'string', required: false }
+    #   - { label: "Image", name: "image", widget: "image", default: "@assets/images/restaurants/default.png" }
+    #   - { label: 'Body', name: 'body', widget: 'markdown', hint: 'Main content goes here.', required: false }
+    #   # - { name: 'gallery', widget: 'image', choose_url: true, media_library: {config: {multiple: true, max_files: 999}}, required: false }
+    #   # - { name: 'post', widget: relation, collection: posts, multiple: true, search_fields: [ "title" ], display_fields: [ "title" ], value_field: "{{slug}}", filters: [ {field: "draft", values: [false]} ] }
+    #   # - name: authors
+    #   #   label: Authors
+    #   #   label_singular: 'Author'
+    #   #   widget: list
+    #   #   fields:
+    #   #     - { label: 'Name', name: 'name', widget: 'string', hint: 'First and Last' }
+    #   #     - { label: 'Description', name: 'description', widget: 'markdown' }
+
+    # - name: 'beaches' # Used in routes, ie.: /admin/collections/:slug/edit
+    #   label: 'Beaches' # Used in the UI
+    #   label_singular: 'Beach' # Used in the UI, ie: "New Post"
+    #   icon: beach_access
+    #   media_folder: /src/assets/images/beaches # Specific media folder for the collection
+    #   public_folder: "@assets/images/beaches" # Specific public assets folder for the collection
+    #   description: >
+    #     Restaurants is an entry type used for testing galleries, relations and other widgets.
+    #     The tests must be written in such way that adding new fields does not affect previous flows.
+    #   folder: '_beaches'
+    #   slug: '{{year}}-{{month}}-{{day}}-{{slug}}'
+    #   summary: '{{title}}'
+    #   create: true # Allow users to create new documents in this collection
+    #   fields: # The fields each document in this collection have
+    #   - { label: 'Title', name: 'title', widget: 'string', tagname: 'h1' }
+    #   - { label: 'Description', name: 'description', widget: 'string', required: false }
+    #   - { label: "Image", name: "image", widget: "image", default: "@assets/images/beaches/default.png" }
+    #   - { label: 'Body', name: 'body', widget: 'markdown', hint: 'Main content goes here.', required: false }
+    #   # - { name: 'gallery', widget: 'image', choose_url: true, media_library: {config: {multiple: true, max_files: 999}}}
+    #   # - { name: 'post', widget: relation, collection: posts, multiple: true, search_fields: [ "title" ], display_fields: [ "title" ], value_field: "{{slug}}", filters: [ {field: "draft", values: [false]} ] }
+    #   # - name: authors
+    #   #   label: Authors
+    #   #   label_singular: 'Author'
+    #   #   widget: list
+    #   #   fields:
+    #   #     - { label: 'Name', name: 'name', widget: 'string', hint: 'First and Last' }
+    #   #     - { label: 'Description', name: 'description', widget: 'markdown' }
+
+    # - label: Questions
+    #   name: questions
+    #   icon: quiz
+    #   create: true
+    #   folder: src/content/questions
+    #   format: json
+    # #   - file: src/content/listings/listings.json
+    #   identifier_field: question
+    #   slug: '{{slug}}'
+    #   fields: # The fields for each document, usually in front matter
+    #     - { label: "Question", name: "question", widget: "string" }
+    #     - { label: "Answer", name: "answer", widget: "markdown" }
+
+    # - name: 'faq' # Used in routes, ie.: /admin/collections/:slug/edit
+    #   label: 'FAQ' # Used in the UI
+    #   icon: quiz
+    #   folder: '_faqs'
+    #   create: true # Allow users to create new documents in this collection
+    #   fields: # The fields each document in this collection have
+    #   - { label: 'Question', name: 'title', widget: 'string', tagname: 'h1' }
+    #   - { label: 'Answer', name: 'body', widget: 'markdown' }
+
+    # # - name: pages # a nested collection
+    # #   label: Pages
+    # #   label_singular: 'Page'
+    # #   folder: _pages
+    # #   create: true
+    # #   nested: { depth: 100 }
+    # #   fields:
+    # #   - label: Title
+    # #     name: title
+    # #     widget: string
+    # #     meta: { path: { widget: string, label: 'Path', index_file: 'index' } }
+
+    # - name: 'kitchenSink' # all the things in one entry, for documentation and quick testing
+    #   label: 'Kitchen Sink'
+    #   folder: '_sink'
+    #   create: true
+    #   fields:
+    #   - label: 'Related Post'
+    #     name: 'post'
+    #     widget: 'relationKitchenSinkPost'
+    #     collection: 'posts'
+    #     display_fields: ['title', 'datetime']
+    #     search_fields: ['title', 'body']
+    #     value_field: 'title'
+    #   - { label: 'Title', name: 'title', widget: 'string' }
+    #   - { label: 'Boolean', name: 'boolean', widget: 'boolean', default: true }
+    #   - { label: 'Map', name: 'map', widget: 'map' }
+    #   - { label: 'Text', name: 'text', widget: 'text', hint: 'Plain text, not markdown' }
+    #   - { label: 'Number', name: 'number', widget: 'number', hint: 'To infinity and beyond!' }
+    #   - { label: 'Markdown', name: 'markdown', widget: 'markdown' }
+    #   - { label: 'Datetime', name: 'datetime', widget: 'datetime' }
+    #   - { label: 'Image', name: 'image', widget: 'image' }
+    #   - { label: 'File', name: 'file', widget: 'file' }
+    #   - { label: 'Select', name: 'select', widget: 'select', options: ['a', 'b', 'c'] }
+    #   - {
+    #       label: 'Select multiple',
+    #       name: 'select_multiple',
+    #       widget: 'select',
+    #       options: ['a', 'b', 'c'],
+    #       multiple: true,
+    #     }
+    #   - { label: 'Hidden', name: 'hidden', widget: 'hidden', default: 'hidden' }
+    #   - { label: 'Color', name: 'color', widget: 'color' }
+    #   - label: 'Object'
+    #     name: 'object'
+    #     widget: 'object'
+    #     collapsed: true
+    #     fields:
+    #       - label: 'Related Post'
+    #         name: 'post'
+    #         widget: 'relationKitchenSinkPost'
+    #         collection: 'posts'
+    #         search_fields: ['title', 'body']
+    #         value_field: 'title'
+    #       - { label: 'String', name: 'string', widget: 'string' }
+    #       - { label: 'Boolean', name: 'boolean', widget: 'boolean', default: false }
+    #       - { label: 'Text', name: 'text', widget: 'text' }
+    #       - { label: 'Number', name: 'number', widget: 'number' }
+    #       - { label: 'Markdown', name: 'markdown', widget: 'markdown' }
+    #       - { label: 'Datetime', name: 'datetime', widget: 'datetime' }
+    #       - { label: 'Image', name: 'image', widget: 'image' }
+    #       - { label: 'File', name: 'file', widget: 'file' }
+    #       - { label: 'Select', name: 'select', widget: 'select', options: ['a', 'b', 'c'] }
+    #   - label: 'List'
+    #     name: 'list'
+    #     widget: 'list'
+    #     fields:
+    #       - { label: 'String', name: 'string', widget: 'string' }
+    #       - { label: 'Boolean', name: 'boolean', widget: 'boolean' }
+    #       - { label: 'Text', name: 'text', widget: 'text' }
+    #       - { label: 'Number', name: 'number', widget: 'number' }
+    #       - { label: 'Markdown', name: 'markdown', widget: 'markdown' }
+    #       - { label: 'Datetime', name: 'datetime', widget: 'datetime' }
+    #       - { label: 'Image', name: 'image', widget: 'image' }
+    #       - { label: 'File', name: 'file', widget: 'file' }
+    #       - { label: 'Select', name: 'select', widget: 'select', options: ['a', 'b', 'c'] }
+    #       - label: 'Object'
+    #         name: 'object'
+    #         widget: 'object'
+    #         fields:
+    #           - { label: 'String', name: 'string', widget: 'string' }
+    #           - { label: 'Boolean', name: 'boolean', widget: 'boolean' }
+    #           - { label: 'Text', name: 'text', widget: 'text' }
+    #           - { label: 'Number', name: 'number', widget: 'number' }
+    #           - { label: 'Markdown', name: 'markdown', widget: 'markdown' }
+    #           - { label: 'Datetime', name: 'datetime', widget: 'datetime' }
+    #           - { label: 'Image', name: 'image', widget: 'image' }
+    #           - { label: 'File', name: 'file', widget: 'file' }
+    #           - { label: 'Select', name: 'select', widget: 'select', options: ['a', 'b', 'c'] }
+    #           - label: 'List'
+    #             name: 'list'
+    #             widget: 'list'
+    #             fields:
+    #               - label: 'Related Post'
+    #                 name: 'post'
+    #                 widget: 'relationKitchenSinkPost'
+    #                 collection: 'posts'
+    #                 search_fields: ['title', 'body']
+    #                 value_field: 'title'
+    #               - { label: 'String', name: 'string', widget: 'string' }
+    #               - { label: 'Boolean', name: 'boolean', widget: 'boolean' }
+    #               - { label: 'Text', name: 'text', widget: 'text' }
+    #               - { label: 'Number', name: 'number', widget: 'number' }
+    #               - { label: 'Markdown', name: 'markdown', widget: 'markdown' }
+    #               - { label: 'Datetime', name: 'datetime', widget: 'datetime' }
+    #               - { label: 'Image', name: 'image', widget: 'image' }
+    #               - { label: 'File', name: 'file', widget: 'file' }
+    #               - { label: 'Select', name: 'select', widget: 'select', options: ['a', 'b', 'c'] }
+    #               - { label: 'Hidden', name: 'hidden', widget: 'hidden', default: 'hidden' }
+    #               - label: 'Object'
+    #                 name: 'object'
+    #                 widget: 'object'
+    #                 fields:
+    #                   - { label: 'String', name: 'string', widget: 'string' }
+    #                   - { label: 'Boolean', name: 'boolean', widget: 'boolean' }
+    #                   - { label: 'Text', name: 'text', widget: 'text' }
+    #                   - { label: 'Number', name: 'number', widget: 'number' }
+    #                   - { label: 'Markdown', name: 'markdown', widget: 'markdown' }
+    #                   - { label: 'Datetime', name: 'datetime', widget: 'datetime' }
+    #                   - { label: 'Image', name: 'image', widget: 'image' }
+    #                   - { label: 'File', name: 'file', widget: 'file' }
+    #                   - {
+    #                       label: 'Select',
+    #                       name: 'select',
+    #                       widget: 'select',
+    #                       options: ['a', 'b', 'c'],
+    #                     }
+    #   - label: 'Typed List'
+    #     name: 'typed_list'
+    #     widget: 'list'
+    #     types:
+    #       - label: 'Type 1 Object'
+    #         name: 'type_1_object'
+    #         widget: 'object'
+    #         fields:
+    #           - { label: 'String', name: 'string', widget: 'string' }
+    #           - { label: 'Boolean', name: 'boolean', widget: 'boolean' }
+    #           - { label: 'Text', name: 'text', widget: 'text' }
+    #       - label: 'Type 2 Object'
+    #         name: 'type_2_object'
+    #         widget: 'object'
+    #         fields:
+    #           - { label: 'Number', name: 'number', widget: 'number' }
+    #           - { label: 'Select', name: 'select', widget: 'select', options: ['a', 'b', 'c'] }
+    #           - { label: 'Datetime', name: 'datetime', widget: 'datetime' }
+    #           - { label: 'Markdown', name: 'markdown', widget: 'markdown' }
+    #       - label: 'Type 3 Object'
+    #         name: 'type_3_object'
+    #         widget: 'object'
+    #         fields:
+    #           - { label: 'Image', name: 'image', widget: 'image' }
+    #           - { label: 'File', name: 'file', widget: 'file' }
+
+    # - name: 'config'
+    #   label: 'Config'
+    #   icon: 'settings'
+    #   delete: false # Prevent users from deleting documents in this collection
+    #   editor:
+    #     preview: false
+    #   files:
+    #   - name: 'general'
+    #     label: 'Site Settings'
+    #     file: '_data/config.json'
+    #     description: 'General Site Settings'
+    #     fields:
+    #       - { label: 'Global title', name: 'site_title', widget: 'string' }
+    #       - label: 'Post Settings'
+    #         name: posts
+    #         widget: 'object'
+    #         fields:
+    #           - {
+    #               label: 'Number of posts on frontpage',
+    #               name: front_limit,
+    #               widget: number,
+    #               min: 1,
+    #               max: 10,
+    #             }
+    #           - { label: 'Default Author', name: author, widget: string }
+    #           - {
+    #               label: 'Default Thumbnail',
+    #               name: thumb,
+    #               widget: image,
+    #               class: 'thumb',
+    #               required: false,
+    #             }
+
+    #   - name: 'authors'
+    #     label: 'Authors'
+    #     file: '_data/authors.yml'
+    #     description: 'Author descriptions'
+    #     fields:
+    #       - name: authors
+    #         label: Authors
+    #         label_singular: 'Author'
+    #         widget: list
+    #         fields:
+    #           - { label: 'Name', name: 'name', widget: 'string', hint: 'First and Last' }
+    #           - { label: 'Description', name: 'description', widget: 'markdown' }

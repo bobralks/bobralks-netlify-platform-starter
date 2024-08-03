@@ -2,10 +2,14 @@
     "printWidth": 160,
     "singleQuote": true,
     "trailingComma": "none",
-    "tabWidth": 4,
+    "tabWidth": 2,
     "overrides": [
         {
-            "files": ["*.md", "*.mdx", "*.yaml"],
+            "files": [
+                "*.md",
+                "*.mdx",
+                "*.yaml"
+            ],
             "options": {
                 "tabWidth": 2
             }

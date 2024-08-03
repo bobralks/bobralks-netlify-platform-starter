@@ -16,6 +16,8 @@
     "@fontsource/inter": "^5.0.20",
     "@netlify/blobs": "^8.0.0",
     "@netlify/functions": "^2.8.1",
+    "@stackbit/cms-git": "^1.0.5",
+    "@stackbit/types": "^2.0.4",
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
     "astro": "^4.13.1",
